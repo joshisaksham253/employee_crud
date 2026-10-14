@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register Employee | Employee Management</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f3f6fb;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #1e293b;
+        }
+
+        /* Navbar */
+        .custom-navbar {
+            background: #111827;
+            padding: 15px 0;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .navbar-brand i {
+            color: #60a5fa;
+            margin-right: 9px;
+        }
+
+        .nav-link {
+            color: #cbd5e1 !important;
+            margin-left: 15px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white !important;
+        }
+
+        /* Page Layout */
+        .page-container {
+            max-width: 1000px;
+            margin: 45px auto;
+            padding: 0 18px;
+        }
+
+        /* Main Card */
+        .register-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.07);
+        }
+
+        /* Header */
+        .register-header {
+            background: linear-gradient(120deg, #166534, #059669, #0f766e);
+            color: white;
+            padding: 32px 38px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-icon {
+            width: 65px;
+            height: 65px;
+            min-width: 65px;
+            border-radius: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.17);
+            font-size: 30px;
+        }
+
+        .register-header h2 {
+            font-size: 27px;
+            font-weight: 700;
+            margin: 0 0 7px;
+        }
+
+        .register-header p {
+            margin: 0;
+            color: #dcfce7;
+            font-size: 14px;
+        }
+
+        .required-note {
+            font-size: 12px;
+            margin-top: 18px;
+            color: #ecfdf5;
+        }
+
+        /* Form Body */
+        .form-body {
+            padding: 38px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #0f172a;
+        }
+
+        .section-heading i {
+            color: #059669;
+            font-size: 21px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 650;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .input-group-text {
+            background: #f8fafc;
+            border-color: #dbe2ea;
+            color: #64748b;
+            min-width: 45px;
+            justify-content: center;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 47px;
+            border: 1px solid #dbe2ea;
+            border-radius: 9px;
+            font-size: 14px;
+            padding: 11px 13px;
+            color: #1e293b;
+            background-color: #fff;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 9px 9px 0;
+        }
+
+        .input-group .input-group-text {
+            border-radius: 9px 0 0 9px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.13);
+        }
+
+        textarea.form-control {
+            min-height: 105px;
+            resize: vertical;
+        }
+
+        .form-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        /* Buttons */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            min-height: 45px;
+            border-radius: 9px;
+            padding: 11px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save {
+            color: white;
+            border: none;
+            background: linear-gradient(120deg, #059669, #047857);
+        }
+
+        .btn-save:hover {
+            color: white;
+            background: #047857;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(5, 150, 105, 0.22);
+        }
+
+        .btn-reset {
+            background: white;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+        }
+
+        .btn-reset:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .btn-back {
+            background: #334155;
+            color: white;
+            border: 1px solid #334155;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-back:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        /* Footer */
+        .card-footer-custom {
+            padding: 17px 38px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .card-footer-custom i {
+            color: #059669;
+        }
+
+        .page-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 576px) {
+            .page-container {
+                margin: 25px auto;
+                padding: 0 12px;
+            }
+
+            .register-header {
+                padding: 25px 20px;
+            }
+
+            .header-icon {
+                width: 52px;
+                height: 52px;
+                min-width: 52px;
+                font-size: 24px;
+            }
+
+            .register-header h2 {
+                font-size: 21px;
+            }
+
+            .form-body {
+                padding: 25px 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-actions .btn-custom {
+                width: 100%;
+            }
+
+            .card-footer-custom {
+                padding: 17px 20px;
+            }
+
+            .footer-content {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+            }
+
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            .nav-link {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+
+            <a class="navbar-brand" href="{% url 'employee_list' %}">
+                <i class="bi bi-buildings-fill"></i>
+                Employee Management
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link"
+                       href="{% url 'employee_list' %}">
+                        <i class="bi bi-house-door me-1"></i> Home
+                    </a>
+
+                    <a class="nav-link active"
+                       aria-current="page"
+                       href="{% url 'register_employee' %}">
+                        <i class="bi bi-person-plus me-1"></i> Register
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Registration Page -->
+    <main class="page-container">
+
+        <div class="register-card">
+
+            <!-- Header -->
+            <div class="register-header">
+
+                <div class="header-content">
+                    <div class="header-icon">
+                        <i class="bi bi-person-vcard-fill"></i>
+                    </div>
+
+                    <div>
+                        <h2>Register New Employee</h2>
+                        <p>Create a new employee record in your organization.</p>
+                    </div>
+                </div>
+
+                <div class="required-note">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Fields marked with * are required.
+                </div>
+
+            </div>
+
+            <!-- Form -->
+            <div class="form-body">
+
+                <h5 class="section-heading">
+                    <i class="bi bi-person-lines-fill"></i>
+                    Employee Information
+                </h5>
+
+                <form method="POST"
+                      action="{% url 'register_employee' %}">
+
+                    {% csrf_token %}
+
+                    <div class="row g-4">
+
+                        <!-- Employee Name -->
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">
+                                Employee Name <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person"></i>
+                                </span>
+
+                                <input type="text"
+                                       id="name"
+                                       name="name"
+                                       class="form-control"
+                                       placeholder="Enter full name"
+                                       maxlength="100"
+                                       autocomplete="name"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="col-md-6">
+                            <label for="age" class="form-label">
+                                Age <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-calendar3"></i>
+                                </span>
+
+                                <input type="number"
+                                       id="age"
+                                       name="age"
+                                       class="form-control"
+                                       placeholder="Enter age"
+                                       min="1"
+                                       max="120"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">
+                                Email Address <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+
+                                <input type="email"
+                                       id="email"
+                                       name="email"
+                                       class="form-control"
+                                       placeholder="name@example.com"
+                                       autocomplete="email"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">
+                                Phone Number <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-telephone"></i>
+                                </span>
+
+                                <input type="tel"
+                                       id="phone"
+                                       name="phone"
+                                       class="form-control"
+                                       placeholder="Enter phone number"
+                                       maxlength="15"
+                                       autocomplete="tel"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Department -->
+                        <div class="col-md-6">
+                            <label for="department" class="form-label">
+                                Department <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-diagram-3"></i>
+                                </span>
+
+                                <select id="department"
+                                        name="department"
+                                        class="form-select"
+                                        required>
+                                    <option value="" selected disabled>
+                                        Select department
+                                    </option>
+                                    <option value="IT">IT</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Operations">Operations</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Salary -->
+                        <div class="col-md-6">
+                            <label for="salary" class="form-label">
+                                Salary (₹) <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-currency-rupee"></i>
+                                </span>
+
+                                <input type="number"
+                                       id="salary"
+                                       name="salary"
+                                       class="form-control"
+                                       placeholder="Enter salary"
+                                       min="0"
+                                       step="0.01"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Joining Date -->
+                        <div class="col-md-6">
+                            <label for="joining_date" class="form-label">
+                                Joining Date <span class="required">*</span>
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-calendar-event"></i>
+                                </span>
+
+                                <input type="date"
+                                       id="joining_date"
+                                       name="joining_date"
+                                       class="form-control"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="col-12">
+                            <label for="address" class="form-label">
+                                Full Address <span class="required">*</span>
+                            </label>
+
+                            <textarea id="address"
+                                      name="address"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Enter house number, street, city and state"
+                                      autocomplete="street-address"
+                                      required></textarea>
+
+                            <div class="form-text">
+                                <i class="bi bi-geo-alt me-1"></i>
+                                Enter the employee's complete address.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <hr class="my-4">
+
+                    <div class="form-actions">
+
+                        <button type="reset"
+                                class="btn btn-custom btn-reset">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i>
+                            Reset Form
+                        </button>
+
+                        <a href="{% url 'employee_list' %}"
+                           class="btn btn-custom btn-back">
+                            <i class="bi bi-arrow-left me-1"></i>
+                            Back to Records
+                        </a>
+
+                        <button type="submit"
+                                class="btn btn-custom btn-save">
+                            <i class="bi bi-person-check-fill me-1"></i>
+                            Save Employee
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="card-footer-custom">
+                <div class="footer-content d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="bi bi-shield-check me-1"></i>
+                        Please verify all information before saving.
+                    </span>
+
+                    <span>Employee Management System</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="page-footer">
+            © Employee Management System | All rights reserved
+        </div>
+
+    </main>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+        }
+
+        .sidebar {
+            background: #111827;
+            min-height: 100vh;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .stat-card {
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .records-card {
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 16px 12px;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            padding: 16px 12px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .employee-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #1d4ed8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .search-box {
+            max-width: 380px;
+        }
+
+        @media (max-width: 767px) {
+            .sidebar {
+                min-height: auto;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <aside class="col-md-3 col-lg-2 sidebar p-3">
+
+            <div class="brand mb-4 mt-2">
+                <i class="bi bi-people-fill text-primary"></i>
+                EmployeeHub
+            </div>
+
+            <small class="text-secondary">MAIN MENU</small>
+
+            <a href="{% url 'employee_list' %}" class="active mt-3">
+                <i class="bi bi-grid me-2"></i> Dashboard
+            </a>
+
+            <a href="{% url 'employee_list' %}">
+                <i class="bi bi-people me-2"></i> Employees
+            </a>
+
+            <a href="{% url 'register_employee' %}">
+                <i class="bi bi-person-plus me-2"></i> Add Employee
+            </a>
+
+            <a href="/admin/">
+                <i class="bi bi-gear me-2"></i> Admin Panel
+            </a>
+
+            <hr class="border-secondary">
+
+            <small class="text-secondary">ACCOUNT</small>
+
+            <a href="{% url 'employee_list' %}">
+                <i class="bi bi-house me-2"></i> Back to Home
+            </a>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="col-md-9 col-lg-10 main-content">
+
+            <!-- Header -->
+            <div class="d-flex flex-wrap justify-content-between
+                        align-items-center gap-3 mb-4">
+
+                <div>
+                    <p class="text-secondary mb-1">
+                        Dashboard / Employees
+                    </p>
+
+                    <h2 class="fw-bold mb-1">Employee Dashboard</h2>
+
+                    <p class="text-secondary mb-0">
+                        Manage your employee records efficiently.
+                    </p>
+                </div>
+
+                <a href="{% url 'register_employee' %}"
+                   class="btn btn-primary px-4 py-2">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Add Employee
+                </a>
+
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="row g-3 mb-4">
+
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card stat-card">
+                        <div class="card-body d-flex
+                                    justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-secondary mb-2">
+                                    Total Employees
+                                </p>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ data|length }}
+                                </h3>
+                            </div>
+
+                            <div class="stat-icon bg-primary-subtle text-primary">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card stat-card">
+                        <div class="card-body d-flex
+                                    justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-secondary mb-2">
+                                    IT Department
+                                </p>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ data|length }}
+                                </h3>
+
+                                <small class="text-secondary">
+                                    Total visible records
+                                </small>
+                            </div>
+
+                            <div class="stat-icon bg-success-subtle text-success">
+                                <i class="bi bi-building"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card stat-card">
+                        <div class="card-body d-flex
+                                    justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-secondary mb-2">
+                                    Management
+                                </p>
+
+                                <h3 class="fw-bold mb-0">CRUD</h3>
+
+                                <small class="text-secondary">
+                                    Create, Read, Update, Delete
+                                </small>
+                            </div>
+
+                            <div class="stat-icon bg-warning-subtle text-warning">
+                                <i class="bi bi-clipboard-data"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Employee Table -->
+            <div class="card records-card">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex flex-wrap
+                                justify-content-between align-items-center
+                                gap-3 mb-4">
+
+                        <div>
+                            <h5 class="fw-bold mb-1">
+                                Employee Records
+                            </h5>
+
+                            <p class="text-secondary mb-0 small">
+                                View and manage all employees.
+                            </p>
+                        </div>
+
+                        <div class="input-group search-box">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input type="text"
+                                   id="searchInput"
+                                   class="form-control"
+                                   placeholder="Search employees...">
+                        </div>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover"
+                               id="employeeTable">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Employee</th>
+                                    <th>Age</th>
+                                    <th>Phone</th>
+                                    <th>Department</th>
+                                    <th>Salary</th>
+                                    <th>Joining Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for emp in data %}
+
+                                <tr>
+                                    <td class="fw-semibold">
+                                        #{{ emp.id }}
+                                    </td>
+
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+
+                                            <div class="employee-avatar">
+                                                {{ emp.name|slice:":1"|upper }}
+                                            </div>
+
+                                            <div>
+                                                <div class="fw-semibold employee-name">
+                                                    {{ emp.name }}
+                                                </div>
+
+                                                <small class="text-secondary">
+                                                    {{ emp.email }}
+                                                </small>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>{{ emp.age }}</td>
+
+                                    <td>{{ emp.phone }}</td>
+
+                                    <td>
+                                        <span class="badge bg-primary-subtle text-primary">
+                                            {{ emp.department }}
+                                        </span>
+                                    </td>
+
+                                    <td class="fw-semibold">
+                                        ₹{{ emp.salary }}
+                                    </td>
+
+                                    <td>
+                                        {{ emp.joining_date|date:"d M Y" }}
+                                    </td>
+
+                                    <td>
+                                        <div class="d-flex gap-2">
+
+                                            <a href="{% url 'update_employee' emp.id %}"
+                                               class="btn btn-sm btn-outline-primary"
+                                               title="Update employee">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+
+                                            <a href="{% url 'delete_employee' emp.id %}"
+                                               class="btn btn-sm btn-outline-danger"
+                                               title="Delete employee">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                {% empty %}
+
+                                <tr>
+                                    <td colspan="8" class="text-center py-5">
+
+                                        <i class="bi bi-people display-4 text-secondary"></i>
+
+                                        <h5 class="mt-3">
+                                            No Employees Found
+                                        </h5>
+
+                                        <p class="text-secondary">
+                                            Add your first employee to get started.
+                                        </p>
+
+                                        <a href="{% url 'register_employee' %}"
+                                           class="btn btn-primary">
+                                            Add Employee
+                                        </a>
+
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                        <p id="noResults"
+                           class="text-center text-secondary py-3 d-none">
+                            No matching employees found.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer bg-white text-secondary small py-3">
+                    Employee Management System · Django CRUD
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+<!-- Search Function -->
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const tableRows = document.querySelectorAll(
+        "#employeeTable tbody tr"
+    );
+    const noResults = document.getElementById("noResults");
+
+    searchInput.addEventListener("input", function () {
+        const searchText = this.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        tableRows.forEach(function (row) {
+            const rowText = row.textContent.toLowerCase();
+            const isMatch = rowText.includes(searchText);
+
+            row.style.display = isMatch ? "" : "none";
+
+            if (isMatch) {
+                visibleCount++;
+            }
+        });
+
+        noResults.classList.toggle("d-none", visibleCount !== 0);
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
